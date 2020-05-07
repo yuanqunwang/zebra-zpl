@@ -82,6 +82,11 @@ public class ZebraLabel {
 		return this;
 	}
 
+	public ZebraLabel addAllElements(List<ZebraElement> zebraElements) {
+	    this.zebraElements.addAll(zebraElements);
+	    return this;
+	}
+
 	/**
 	 * Use to define a default Zebra font on the label
 	 * 

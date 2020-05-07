@@ -75,7 +75,7 @@ public abstract class ZebraElement {
 
 		StringBuffer zpl = new StringBuffer("");
 		if (positionX != null && positionY != null) {
-			zpl.append(ZplUtils.zplCommand("FT", positionX, positionY));
+			zpl.append(ZplUtils.zplCommand("FO", positionX, positionY));
 		}
 		return zpl.toString();
 	}

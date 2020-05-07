@@ -54,6 +54,7 @@ public class ZebraPrinterMultipleTest extends TestCase {
 		List<ZebraLabel> zebraLabels = new ArrayList<ZebraLabel>();
 		zebraLabels.add(zebraLabel);
 		zebraLabels.add(zebraLabel);
+		System.out.println(zebraLabel.getZplCode());
 
 		//ZebraUtils.printZpl(zebraLabels, ip, port);
 	}
