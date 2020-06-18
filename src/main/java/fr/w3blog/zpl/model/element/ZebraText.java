@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import fr.w3blog.zpl.constant.ZebraFont;
+import fr.w3blog.zpl.constant.ZebraPPP;
 import fr.w3blog.zpl.constant.ZebraRotation;
 import fr.w3blog.zpl.model.PrinterOptions;
 import fr.w3blog.zpl.model.ZebraElement;
@@ -64,7 +65,7 @@ public class ZebraText extends ZebraElement {
 		this.positionY = positionY;
 	}
 
-	public ZebraText(int positionX, int positionY, String text, ZebraFont zebraFont, int fontSize, ZebraRotation zebraRotation) {
+	public ZebraText(Integer positionX, Integer positionY, String text, ZebraFont zebraFont, Integer fontSize, ZebraRotation zebraRotation) {
 		this.zebraFont = zebraFont;
 		this.fontSize = fontSize;
 		this.zebraRotation = zebraRotation;
@@ -88,15 +89,21 @@ public class ZebraText extends ZebraElement {
 	public String getZplCode(PrinterOptions printerOptions) {
 		StringBuffer zpl = new StringBuffer();
 		zpl.append(this.getZplCodePosition());
+		ZebraFont defaultZebraFont = printerOptions.getDefaultZebraFont();
+		Integer defaultFontSize = printerOptions.getDefaultFontSize();
+		ZebraPPP defaultZebraPPP = printerOptions.getZebraPPP();
 
 		if (fontSize != null && zebraFont != null) {
 			//This element has specified size and font
-			Integer[] dimension = ZplUtils.extractDotsFromFont(zebraFont, fontSize, printerOptions.getZebraPPP());
+			Integer[] dimension = ZplUtils.extractDotsFromFont(zebraFont, fontSize, defaultZebraPPP);
 			zpl.append(ZplUtils.zplCommand("A", zebraFont.getLetter() + zebraRotation.getLetter(), dimension[0], dimension[1]));
-		} else if (fontSize != null && printerOptions.getDefaultZebraFont() != null) {
+		} else if (fontSize != null && defaultZebraFont != null) {
 			//This element has specified size, but with default font
-			Integer[] dimension = ZplUtils.extractDotsFromFont(printerOptions.getDefaultZebraFont(), fontSize, printerOptions.getZebraPPP());
-			zpl.append(ZplUtils.zplCommand("A", printerOptions.getDefaultZebraFont().getLetter() + zebraRotation.getLetter(), dimension[0], dimension[1]));
+			Integer[] dimension = ZplUtils.extractDotsFromFont(defaultZebraFont, fontSize, defaultZebraPPP);
+			zpl.append(ZplUtils.zplCommand("A", defaultZebraFont.getLetter() + zebraRotation.getLetter(), dimension[0], dimension[1]));
+		} else if (defaultFontSize != null && defaultZebraFont != null) {
+			Integer[] dimension = ZplUtils.extractDotsFromFont(defaultZebraFont, defaultFontSize, defaultZebraPPP);
+			zpl.append(ZplUtils.zplCommand("A", defaultZebraFont.getLetter() + zebraRotation.getLetter(), dimension[0], dimension[1]));
 		}
 
 		zpl.append("^FH\\^FD");//We allow hexadecimal and start element
