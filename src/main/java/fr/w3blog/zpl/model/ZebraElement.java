@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import fr.w3blog.zpl.constant.ZebraPPP;
 import fr.w3blog.zpl.utils.ZplUtils;
 
 public abstract class ZebraElement {
@@ -78,6 +79,26 @@ public abstract class ZebraElement {
 			zpl.append(ZplUtils.zplCommand("FO", positionX, positionY));
 		}
 		return zpl.toString();
+	}
+
+	protected String getZplCodePosition(ZebraPPP zebraPPP) {
+		StringBuilder zpl = new StringBuilder("");
+		if(zebraPPP != null) {
+			float factor = this.scale(zebraPPP);
+			if (positionX != null && positionY != null) {
+				zpl.append(ZplUtils.zplCommand("FO", Math.round(positionX * factor), Math.round(positionY * factor)));
+			}
+			return zpl.toString();
+		}
+		return zpl.toString();
+	}
+
+	protected float scale(ZebraPPP zebraPPP) {
+		if(zebraPPP != null) {
+			return zebraPPP.getDotByMm() / ZebraPPP.values()[0].getDotByMm();
+		} else {
+			return 1.0f;
+		}
 	}
 
 	/**
