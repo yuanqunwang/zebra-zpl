@@ -18,6 +18,8 @@ public class PrinterOptions {
 
 	private Integer defaultFontSize = null;
 
+	private Float lineHeight = 1.1f;
+
 	public PrinterOptions() {
 		super();
 	}
@@ -32,6 +34,7 @@ public class PrinterOptions {
 			this.zebraPPP = printerOptions.getZebraPPP();
 			this.defaultZebraFont = printerOptions.getDefaultZebraFont();
 			this.defaultFontSize = printerOptions.getDefaultFontSize();
+			this.lineHeight = printerOptions.lineHeight;
 		} else {
 			throw new RuntimeException("PrinterOptions can not be null");
 		}
@@ -85,4 +88,13 @@ public class PrinterOptions {
 		return this;
 	}
 
+	public Float getLineHeight()
+	{
+		return lineHeight;
+	}
+
+	public void setLineHeight(Float lineHeight)
+	{
+		this.lineHeight = lineHeight;
+	}
 }
