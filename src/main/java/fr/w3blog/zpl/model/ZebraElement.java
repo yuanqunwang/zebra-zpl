@@ -81,14 +81,14 @@ public abstract class ZebraElement {
 		return zpl.toString();
 	}
 
-	protected String getZplCodePosition(ZebraPPP zebraPPP) {
+	protected String getZplCodePosition(ZebraPPP zp) {
+	    if(zp == null)
+		{
+			throw new RuntimeException("ZebraPPP can not be null");
+		}
 		StringBuilder zpl = new StringBuilder("");
-		if(zebraPPP != null) {
-			float factor = this.scale(zebraPPP);
-			if (positionX != null && positionY != null) {
-				zpl.append(ZplUtils.zplCommand("FO", Math.round(positionX * factor), Math.round(positionY * factor)));
-			}
-			return zpl.toString();
+		if (positionX != null && positionY != null) {
+			zpl.append(ZplUtils.zplCommand("FO", Math.round(positionX * zp.getDotByMm()), Math.round(positionY * zp.getDotByMm())));
 		}
 		return zpl.toString();
 	}
