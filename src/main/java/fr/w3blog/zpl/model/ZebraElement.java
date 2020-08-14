@@ -146,4 +146,12 @@ public abstract class ZebraElement {
 		positionY = positionY + textHeight;
 		graphic.drawString(text, positionX, positionY); // Draw the string.
 	}
+
+	public void setDefaultDrawGraphic(boolean defaultDrawGraphic) {
+		this.defaultDrawGraphic = defaultDrawGraphic;
+	}
+
+	public boolean isDefaultDrawGraphic() {
+		return defaultDrawGraphic;
+	}
 }

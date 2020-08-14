@@ -167,7 +167,7 @@ public class ZebraLabel {
 		this.zebraElements = zebraElements;
 	}
 
-	public String getZplCode() {
+	public String getZplCode(boolean defaultDrawable) {
 		StringBuilder zpl = new StringBuilder();
 
 		zpl.append(ZplUtils.zplCommandSautLigne("XA"));//Start Label
@@ -188,10 +188,20 @@ public class ZebraLabel {
 		}
 
 		for (ZebraElement zebraElement : zebraElements) {
-			zpl.append(zebraElement.getZplCode(printerOptions));
+		    if(defaultDrawable) {
+				zpl.append(zebraElement.getZplCode(printerOptions));
+			} else {
+		    	if(zebraElement.isDefaultDrawGraphic()) {
+					zpl.append(zebraElement.getZplCode(printerOptions));
+				}
+			}
 		}
 		zpl.append(ZplUtils.zplCommandSautLigne("XZ"));//End Label
 		return zpl.toString();
+	}
+
+	public String getZplCode() {
+		return getZplCode(true);
 	}
 
 	/**
