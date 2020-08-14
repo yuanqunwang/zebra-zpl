@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import fr.w3blog.zpl.constant.ZebraPPP;
 import fr.w3blog.zpl.utils.ZplUtils;
 
-public abstract class ZebraElement {
+public abstract class ZebraElement implements Cloneable{
 
 	/**
 	 * x-axis location (in dots)
@@ -29,7 +29,7 @@ public abstract class ZebraElement {
 	/**
 	 * @return the positionX
 	 */
-	public int getPositionX() {
+	public Integer getPositionX() {
 		return positionX;
 	}
 
@@ -45,7 +45,7 @@ public abstract class ZebraElement {
 	/**
 	 * @return the positionY
 	 */
-	public int getPositionY() {
+	public Integer getPositionY() {
 		return positionY;
 	}
 
@@ -153,5 +153,10 @@ public abstract class ZebraElement {
 
 	public boolean isDefaultDrawGraphic() {
 		return defaultDrawGraphic;
+	}
+
+	@Override
+	public ZebraElement clone() throws CloneNotSupportedException {
+		return (ZebraElement) super.clone();
 	}
 }
