@@ -12,13 +12,23 @@ import fr.w3blog.zpl.utils.ZplUtils;
 public abstract class ZebraElement implements Cloneable{
 
 	/**
-	 * x-axis location (in dots)
+	 * x-axis location (in mm) int
 	 */
 	protected Integer positionX;
 	/**
-	 * y-axis location (in dots)
+	 * y-axis location (in mm) int
 	 */
 	protected Integer positionY;
+
+	// 解决配置文件只能配置整数，不能配置小数，造成的精度问题
+	/**
+	 * x-axis location(in mm) float
+	 */
+	protected Float positionXX;
+	/**
+	 * y-axis location(in mm) float
+	 */
+	protected Float positionYY;
 
 	/**
 	 * Will draw a default box on the graphic if drawGraphic method is not overload
@@ -49,6 +59,22 @@ public abstract class ZebraElement implements Cloneable{
 		return positionY;
 	}
 
+	public Float getPositionXX() {
+		return positionXX;
+	}
+
+	public void setPositionXX(Float positionXX) {
+		this.positionXX = positionXX;
+	}
+
+	public Float getPositionYY() {
+		return positionYY;
+	}
+
+	public void setPositionYY(Float positionYY) {
+		this.positionYY = positionYY;
+	}
+
 	/**
 	 * @param positionY
 	 *            the positionY to set
@@ -73,12 +99,7 @@ public abstract class ZebraElement implements Cloneable{
 	 * @return
 	 */
 	protected String getZplCodePosition() {
-
-		StringBuffer zpl = new StringBuffer("");
-		if (positionX != null && positionY != null) {
-			zpl.append(ZplUtils.zplCommand("FO", positionX, positionY));
-		}
-		return zpl.toString();
+	    return getZplCodePosition(ZebraPPP.DPI_203);
 	}
 
 	protected String getZplCodePosition(ZebraPPP zp) {
@@ -89,6 +110,8 @@ public abstract class ZebraElement implements Cloneable{
 		StringBuilder zpl = new StringBuilder("");
 		if (positionX != null && positionY != null) {
 			zpl.append(ZplUtils.zplCommand("FO", Math.round(positionX * zp.getDotByMm()), Math.round(positionY * zp.getDotByMm())));
+		} else if(positionXX != null && positionYY != null) {
+			zpl.append(ZplUtils.zplCommand("FO", Math.round(positionXX * zp.getDotByMm()), Math.round(positionYY * zp.getDotByMm())));
 		}
 		return zpl.toString();
 	}

@@ -52,6 +52,7 @@ public class ZebraText extends ZebraElement {
 		this.text = text;
 	}
 
+	//in int
 	public ZebraText(int positionX, int positionY, String text) {
 		this.text = text;
 		this.positionX = positionX;
@@ -80,6 +81,24 @@ public class ZebraText extends ZebraElement {
 		this.text = text;
 		this.positionX = positionX;
 		this.positionY = positionY;
+	}
+
+	//in float
+	public ZebraText(Float positionXX, Float positionYY, String text, ZebraFont zebraFont, Integer fontSize, ZebraRotation zebraRotation) {
+		this.zebraFont = zebraFont;
+		this.fontSize = fontSize;
+		this.zebraRotation = zebraRotation;
+		this.text = text;
+		this.positionXX = positionXX;
+		this.positionYY = positionYY;
+	}
+
+	public ZebraText(Float positionXX, Float positionYY, String text, ZebraFont zebraFont, int fontSize) {
+		this.zebraFont = zebraFont;
+		this.fontSize = fontSize;
+		this.text = text;
+		this.positionXX = positionXX;
+		this.positionYY = positionYY;
 	}
 
 	/* (non-Javadoc)
