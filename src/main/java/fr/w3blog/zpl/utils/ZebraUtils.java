@@ -2,6 +2,7 @@ package fr.w3blog.zpl.utils;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
@@ -39,14 +40,17 @@ public class ZebraUtils {
 	 * @throws ZebraPrintException
 	 *             if zpl could not be printed
 	 */
-	public static void printZpl(String zpl, String ip, int port) throws ZebraPrintException {
+	public static void printZpl(String zpl, String ip, int port, int timeOut) throws ZebraPrintException {
 		Socket clientSocket = null;
 		try {
 			try {
-				clientSocket = new Socket(ip, port);
+			    InetSocketAddress address = new InetSocketAddress(ip, port);
+			    clientSocket = new Socket();
+			    clientSocket.bind(address);
+			    clientSocket.connect(address, timeOut);
+				clientSocket.setSoTimeout(timeOut);
 				DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 				outToServer.writeBytes(zpl);
-				clientSocket.close();
 			} finally {
 				if (clientSocket != null) {
 					clientSocket.close();
@@ -56,6 +60,9 @@ public class ZebraUtils {
 			throw new ZebraPrintException("Cannot print label on this printer : " + ip + ":" + port, e1);
 		}
 	}
+	public static void printZpl(String zpl, String ip, int port) throws ZebraPrintException {
+	    printZpl(zpl, ip, port, 0);
+    }
 
 	/**
 	 * Function to print code Zpl to local zebra(usb)
@@ -114,6 +121,9 @@ public class ZebraUtils {
 	 */
 	public static void printZpl(ZebraLabel zebraLabel, String ip, int port) throws ZebraPrintException {
 		printZpl(zebraLabel.getZplCode(), ip, port);
+	}
+	public static void printZpl(ZebraLabel zebraLabel, String ip, int port, int timeOut) throws ZebraPrintException {
+		printZpl(zebraLabel.getZplCode(), ip, port, timeOut);
 	}
 
 	/**
