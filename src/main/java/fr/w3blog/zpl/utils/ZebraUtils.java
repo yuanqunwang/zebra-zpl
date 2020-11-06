@@ -46,7 +46,6 @@ public class ZebraUtils {
 			try {
 			    InetSocketAddress address = new InetSocketAddress(ip, port);
 			    clientSocket = new Socket();
-			    clientSocket.bind(address);
 			    clientSocket.connect(address, timeOut);
 				clientSocket.setSoTimeout(timeOut);
 				DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
